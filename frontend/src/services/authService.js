@@ -1,8 +1,5 @@
 import { apiFetch } from "../utils/api";
 
-const API_URL = "http://localhost:5000/api/auth";
-
-
 export const registerUser = async (name, email, password) => {
   const response = await apiFetch("/auth/register", {
     method: "POST",
