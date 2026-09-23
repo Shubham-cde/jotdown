@@ -67,6 +67,7 @@ const updateNote = async (req, res) => {
     note.isPinned = req.body.isPinned ?? note.isPinned;
     note.isFavorite = req.body.isFavorite ?? note.isFavorite;
     note.tags = req.body.tags ?? note.tags;
+    note.isDeleted = req.body.isDeleted ?? note.isDeleted;
 
     const updated = await note.save();
     res.json(updated);
