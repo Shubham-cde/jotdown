@@ -9,16 +9,21 @@ const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
 
-// ✅ CORS FIRST — this is enough
+// CLIENT_URL can list several frontend addresses separated by commas.
+// Trailing slashes are removed because CORS compares origins exactly.
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/$/, ""));
+
+// CORS must run before the routes so browser preflight requests are answered.
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// ✅ THEN body parser
 app.use(express.json());
 
 // Routes
