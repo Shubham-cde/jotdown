@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:#060816;
+}
+
+.login-page{
+  width:100%;
+  height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  position:relative;
+  overflow:hidden;
+
+  background:
+    radial-gradient(circle at top left,#6d28d9 0%,transparent 30%),
+    radial-gradient(circle at bottom right,#2563eb 0%,transparent 30%),
+    #060816;
+}
+
+/* BLUR EFFECTS */
+
+.bg-blur{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(120px);
+}
+
+.blur1{
+  width:300px;
+  height:300px;
+  background:#7c4dff;
+
+  top:-100px;
+  left:-100px;
+}
+
+.blur2{
+  width:300px;
+  height:300px;
+  background:#2563eb;
+
+  bottom:-100px;
+  right:-100px;
+}
+
+/* MAIN CONTAINER */
+
+.login-container{
+  width:90%;
+  max-width:1200px;
+  height:80vh;
+
+  border-radius:30px;
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(25px);
+
+  box-shadow:
+    0 0 60px rgba(124,77,255,0.15);
+}

@@ -1,0 +1,22 @@
+@'
+# Dependencies (reinstall anytime with npm install)
+node_modules/
+
+# Secrets - never commit these
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+'@ | Set-Content -Path C:\Users\OMEN\jotdown\.gitignore -Encoding ascii
