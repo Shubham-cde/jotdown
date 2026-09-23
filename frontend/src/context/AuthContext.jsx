@@ -14,33 +14,19 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const data = await loginUser(email, password);
-
-    console.log("LOGIN RESPONSE:", data);
-
     saveToken(data.token);
 
-    console.log("STORED TOKEN:", localStorage.getItem("token"));
-
     const me = await getMe();
-
-    console.log("CURRENT USER:", me);
-
     setUser(me);
   };
 
   const register = async (name, email, password) => {
-  const data = await registerUser(
-    name,
-    email,
-    password
-  );
+    const data = await registerUser(name, email, password);
+    saveToken(data.token);
 
-  saveToken(data.token);
-
-  const me = await getMe();
-
-  setUser(me);
-};
+    const me = await getMe();
+    setUser(me);
+  };
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -63,15 +49,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-  user,
-  loading,
-  login,
-  register,
-  logout,
-}}
-    >
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
