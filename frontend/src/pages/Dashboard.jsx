@@ -1,8 +1,6 @@
-// FULL FILE — TAGS ENABLED
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-
-
+import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect, useRef, useMemo } from "react";
 import AuthContext from "../context/AuthContext";
@@ -14,12 +12,8 @@ import {
   deleteNote,
 } from "../services/notesService";
 import NoteComposer from "../components/notes/NoteComposer";
-import { FileText, Star, Tag, Trash2, LogOut } from "lucide-react";
+import { FileText, Star, Tag, Trash2, LogOut, Search } from "lucide-react";
 import logo from "../assets/logo.png";
-import { Search } from "lucide-react";
-
-
-
 
 const Dashboard = () => {
   const [notes, setNotes] = useState([]);
@@ -78,10 +72,10 @@ const formats = [
 
   const fetchNotes = async () => {
   const data = await getNotes();
-  setNotes([...data].reverse());
+  setNotes(data);
 
   const trashData = await getTrashNotes();
-  setTrash([...trashData].reverse());
+  setTrash(trashData);
 
   setLoading(false);
 };
@@ -122,8 +116,6 @@ const saveNote = async () => {
     tags: finalTags,
   });
 
-  console.log("UPDATED NOTE:", updated);
-
   setNotes((prev) =>
     prev.map((n) => (n._id === openNoteId ? updated : n))
   );
@@ -158,8 +150,6 @@ const saveNote = async () => {
   const updated = await updateNote(note._id, {
     isFavorite: !note.isFavorite,
   });
-
-  console.log(updated);
 
   setNotes((prev) =>
     prev.map((n) => (n._id === note._id ? updated : n))
@@ -284,7 +274,7 @@ if (!query.trim()) return base;
   style={{
     fontFamily: "Poppins, sans-serif",
     fontWeight: 700,
-    fontSize: 22,   // bigger so you SEE the font change
+    fontSize: 22,
     letterSpacing: 2,
     color: "#ffffff",
   }}
@@ -351,17 +341,6 @@ if (!query.trim()) return base;
       <main className="main">
         <div className="topbar">
           <div style={{ position: "relative", flex: 1 }}>
-  <Search
-    size={16}
-    style={{
-      position: "absolute",
-      left: 12,
-      top: "50%",
-      transform: "translateY(-50%)",
-      opacity: 0.6,
-    }}
-  />
-
   <div style={{ position: "relative", width: "100%" }}>
   <Search
     size={18}
@@ -533,7 +512,7 @@ if (!query.trim()) return base;
 
              <div
    className="note-content muted"
-  dangerouslySetInnerHTML={{ __html: note.content }}
+  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.content || "") }}
 />
 
               <div className="note-tags">
